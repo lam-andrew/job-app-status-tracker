@@ -4,6 +4,8 @@ from datetime import date
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
+current_date = date.today()
+
 app = Flask(__name__)
 CORS(app)
 
@@ -13,11 +15,8 @@ client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 def hello():
     return "Hello World"
 
-@app.route("/insert_job", methods=['POST'])
+@app.route("/insert_job")
 def insert_job():
-    data = request.json  # Assuming JSON data is sent in the request body
-    job_desc_input = data.get('job_desc_input')
-    current_date = data.get('current_date')
 
     api_prompt=f'''
     Given the following job description, extract and structure the essential details into a JSON format including the Job Title, Company Name, Location, Work Format, Remote Work Availability, Application Deadline, and any additional relevant details you can find. 
@@ -62,9 +61,11 @@ def insert_job():
         response_format={"type": "json_object"},
         model="gpt-4-1106-preview",
     )
-
+    
     job_json = chat_completion.choices[0].message.content
-    return jsonify({"message": "Job description received", "job_json": job_json, "current_date": current_date})
+    print(f"CHAT COMPLETION: {chat_completion}")
+    print(f"JOB JSON: {job_json}")
+    return job_json
 
 
 contains_extra_fields_for_later = '''
@@ -96,7 +97,7 @@ contains_extra_fields_for_later = '''
     }
     '''
 
-current_date = date.today()
+
 
 job_desc_input='''
 Software Developer- job post
