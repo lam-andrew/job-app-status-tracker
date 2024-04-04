@@ -6,7 +6,7 @@ import Hello from './components/Hello';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App h-screen bg-slate-100">
       <JobForm />
     </div>
   );

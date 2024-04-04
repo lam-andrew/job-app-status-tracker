@@ -19,36 +19,36 @@ def hello():
 def insert_job():
 
     api_prompt=f'''
-    Given the following job description, extract and structure the essential details into a JSON format including the Job Title, Company Name, Location, Work Format, Remote Work Availability, Application Deadline, and any additional relevant details you can find. 
-    If certain information cannot be found within the job description, please identify those fields as null. Do not attempt to assume any unspecified attributes based on the context, but ensure all fields are present in the final JSON. 
-    Add an Application Date as the current date to track when the job description was entered and set the Application Status to 'Applied' as a default for the entry.
-    Note: The "ApplicationDate" field should be set to the date on which this prompt is being processed {current_date}.
-    If there are any additional details that you find in the job description that are not current an attribute of the json template below, please add them into the nested AdditionalDetails json
+        Given the following job description, extract and structure the essential details into a JSON format including the Job Title, Company Name, Location, Work Format, Remote Work Availability, Application Deadline, and any additional relevant details you can find. 
+        If certain information cannot be found within the job description, please identify those fields as null. Do not attempt to assume any unspecified attributes based on the context, but ensure all fields are present in the final JSON. 
+        Add an Application Date as the current date to track when the job description was entered and set the Application Status to 'Applied' as a default for the entry.
+        Note: The "ApplicationDate" field should be set to the date on which this prompt is being processed {current_date}.
+        If there are any additional details that you find in the job description that are not current an attribute of the json template below, please add them into the nested AdditionalDetails json
 
-    ---
+        ---
 
-    {job_desc_input}
+        {job_desc_input}
 
-    ---
+        ---
 
-    Please structure the information as follows:
+        Please structure the information as follows:
 
-    {{
-    "JobTitle": "<Job Title or null>",
-    "CompanyName": "<Company Name or null>",
-    "Location": "<Location or null>",
-    "WorkFormat": "<Full-Time/Part-Time/Contract/Internship or null>",
-    "RemoteWorkAvailability": "<Onsite/Remote/Hybrid or null>",
-    "ApplicationDeadline": "<YYYY-MM-DD or null>",
-    "ApplicationDate": "Please insert the current date in YYYY-MM-DD format",
-    "SalaryRange": "<If available or null>",
-    "RequiredSkills": ["<Skill 1>", "<Skill 2>", "... or null"],
-    "Benefits": ["<Benefit 1>", "<Benefit 2>", "... or null"],
-    "ApplicationStatus": "Applied",
-    "AdditionalDetails": {{
-        "ApplicationLink": "<URL if available or null>"
-    }}
-    }}
+        {{
+            "JobTitle": "<Job Title or null>",
+            "CompanyName": "<Company Name or null>",
+            "Location": "<Location or null>",
+            "WorkFormat": "<Full-Time/Part-Time/Contract/Internship or null>",
+            "RemoteWorkAvailability": "<Onsite/Remote/Hybrid or null>",
+            "ApplicationDeadline": "<YYYY-MM-DD or null>",
+            "ApplicationDate": "Please insert the current date in YYYY-MM-DD format",
+            "SalaryRange": "<If available or null>",
+            "RequiredSkills": ["<Skill 1>", "<Skill 2>", "... or null"],
+            "Benefits": ["<Benefit 1>", "<Benefit 2>", "... or null"],
+            "ApplicationStatus": "Applied",
+            "AdditionalDetails": {{
+                "ApplicationLink": "<URL if available or null>"
+            }}
+        }}
     '''
 
     chat_completion = client.chat.completions.create(
